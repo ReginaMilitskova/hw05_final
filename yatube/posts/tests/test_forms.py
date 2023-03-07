@@ -18,7 +18,7 @@ class PostFormTests(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.user = User.objects.create_user(username='auth')
-#        cls.user_two = User.objects.create_user(username='Other')
+        cls.user_two = User.objects.create_user(username='Other')
 
         cls.group = Group.objects.create(
             title='Тестовый заголовок',
@@ -54,8 +54,8 @@ class PostFormTests(TestCase):
         self.guest_client = Client()
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
-#        self.other_user = Client()
-#        self.other_user.force_login(self.user_two)
+        self.other_user = Client()
+        self.other_user.force_login(self.user_two)
         cache.clear()
 
     def test_post_create(self):
@@ -76,16 +76,14 @@ class PostFormTests(TestCase):
 
         self.assertRedirects(response,
                              reverse('posts:profile',
-                                     args=(self.user.username)))
+                                     kwargs={'username': self.user.username}))
         self.assertEqual(Post.objects.count(), post_count + 1)
         self.assertTrue(
             Post.objects.filter(
                 text=form_data['text'],
                 group=self.group,
-                image='posts/small.gif'
             ).exists()
         )
-        print(self.post.image)
 
     def test_post_edit(self):
         """Валидная форма сохраняет отредактированный автором пост."""

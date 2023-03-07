@@ -131,7 +131,7 @@ def follow_index(request):
     follow_posts = Post.objects.filter(
         author__following__user=request.user
     )
-    page_obj = pagination(follow_posts, request)
+    page_obj = pagination(request, follow_posts)
     context = {
         'page_obj': page_obj
     }
