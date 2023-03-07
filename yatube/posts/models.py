@@ -66,23 +66,23 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(
         Post,
-        verbose_name = 'Пост',
-        related_name = 'comments',
-        on_delete = models.CASCADE,
+        verbose_name='Пост',
+        related_name='comments',
+        on_delete=models.CASCADE,
     )
     author = models.ForeignKey(
         User,
-        verbose_name = 'Автор комментария',
-        related_name = 'comments',
-        on_delete = models.CASCADE,
+        verbose_name='Автор комментария',
+        related_name='comments',
+        on_delete=models.CASCADE,
     )
     text = models.TextField(
-        verbose_name = 'Текст комментария',
-        help_text = 'Оставьте комментарий',
+        verbose_name='Текст комментария',
+        help_text='Оставьте комментарий',
     )
     created = models.DateTimeField(
-        verbose_name = 'Дата публикации',
-        auto_now_add = True,
+        verbose_name='Дата публикации',
+        auto_now_add=True,
     )
 
     class Meta:

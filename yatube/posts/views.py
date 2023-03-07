@@ -15,6 +15,7 @@ def pagination(request, posts):
     page_obj = paginator.get_page(page_number)
     return page_obj
 
+
 @cache_page(CACHE_TIME, key_prefix='index_page')
 def index(request):
     template = 'posts/index.html'
@@ -87,7 +88,7 @@ def post_create(request):
         create_post.save()
         return redirect('posts:profile', create_post.author)
 
-    context = {'form': form,}
+    context = {'form': form, }
     return render(request, template, context)
 
 
@@ -111,6 +112,7 @@ def post_edit(request, post_id):
         form.save()
         return redirect('posts:post_detail', post_id)
     return render(request, template, context)
+
 
 @login_required
 def add_comment(request, post_id):

@@ -44,12 +44,12 @@ class PostsPagesTests(TestCase):
             text='Привет, мир!',
             image=cls.uploaded,
         )
-    
+
     @classmethod
     def tearDownClass(cls):
         super().tearDownClass()
         shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
-    
+
     def setUp(self):
         self.guest_client = Client()
         self.authorized_client = Client()
@@ -60,13 +60,17 @@ class PostsPagesTests(TestCase):
         """URL-адрес использует соответствующий шаблон."""
         templates_pages_names = {
             reverse('posts:index'): 'posts/index.html',
-            reverse('posts:group_list', kwargs={'slug': PostsPagesTests.group.slug}):
+            reverse('posts:group_list',
+                    kwargs={'slug': PostsPagesTests.group.slug}):
             'posts/group_list.html',
-            reverse('posts:profile', kwargs={'username': PostsPagesTests.user.username}):
+            reverse('posts:profile',
+                    kwargs={'username': PostsPagesTests.user.username}):
             'posts/profile.html',
-            reverse('post:post_detail', kwargs={'post_id': PostsPagesTests.post.id}):
+            reverse('post:post_detail',
+                    kwargs={'post_id': PostsPagesTests.post.id}):
             'posts/post_detail.html',
-            reverse('posts:post_edit', kwargs={'post_id': PostsPagesTests.post.id}):
+            reverse('posts:post_edit',
+                    kwargs={'post_id': PostsPagesTests.post.id}):
             'posts/post_create.html',
             reverse('posts:post_create'): 'posts/post_create.html',
         }

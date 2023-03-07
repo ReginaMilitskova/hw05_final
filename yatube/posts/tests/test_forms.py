@@ -200,11 +200,11 @@ class CommentFormTests(TestCase):
             author=cls.user,
             text='Тестовый комментарий',
         )
-    
+
     def setUp(self):
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
-    
+
     def test_anon_user_cant_comments(self):
         """Анонимный пользователь не может оставлять комментарии"""
         guest_client = Client()
@@ -249,4 +249,6 @@ class CommentFormTests(TestCase):
         response = self.authorized_client.get(
             reverse('posts:post_detail', kwargs={'post_id': post_new.pk}),
         )
-        self.assertEqual(response.context['comments'][0].text, form_data['text'])
+        self.assertEqual(
+            response.context['comments'][0].text, form_data['text']
+        )

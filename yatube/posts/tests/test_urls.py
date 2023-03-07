@@ -70,7 +70,7 @@ class PostURLTests(TestCase):
                         self.assertRedirects(response, expected_url)
                     else:
                         self.assertEqual(response.status_code, 200)
-        
+
     def test_guest_urls_uses_correct_template(self):
         """URL-адреса для гостя используют соответствующий шаблон."""
         templates_url_names = {
@@ -90,7 +90,7 @@ class PostURLTests(TestCase):
             with self.subTest(address=address):
                 response = self.guest_client.get(address)
                 self.assertTemplateUsed(response, template)
-    
+
     def test_auth_urls_uses_correct_template(self):
         """URL-адреса для авторизованного пользователя
         используют соответствующий шаблон."""
