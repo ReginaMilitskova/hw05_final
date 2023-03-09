@@ -48,19 +48,10 @@ def profile(request, username):
         user=request.user,
         author=author
     ).exists()
-    if following:
-        if request.user != author.username:
-            non_author = True
-        else:
-            non_author = False
-    else:
-        following = False
-        non_author = False
     context = {
         'author': author,
         'page_obj': page_obj,
         'following': following,
-        'non_author': non_author,
     }
     return render(request, template, context)
 
