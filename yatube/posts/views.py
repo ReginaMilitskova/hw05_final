@@ -44,10 +44,11 @@ def profile(request, username):
     author = get_object_or_404(User, username=username)
     posts = author.posts.all()
     page_obj = pagination(request, posts)
-    if request.user.is_authenticated:
-        following = Follow.objects.filter(
-            user__exact=request.user, author__exact=author
-        ).exists()
+    following = request.user.is_authenticated and Follow.objects.filter(
+        user=request.user,
+        author=author
+    ).exists()
+    if following:
         if request.user != author.username:
             non_author = True
         else:
@@ -67,13 +68,12 @@ def profile(request, username):
 def post_detail(request, post_id):
     template = 'posts/post_detail.html'
     post = get_object_or_404(Post, pk=post_id)
-    comments = Comment.objects.filter(post_id__exact=post.pk)
+    comments = Comment.objects.filter(post=post)
     comment_form = CommentForm(request.POST or None)
     context = {
         'post': post,
         'comments': comments,
         'comment_form': comment_form,
-        'is_author': post.author == request.user,
     }
     return render(request, template, context)
 
